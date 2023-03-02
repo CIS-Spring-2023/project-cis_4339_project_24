@@ -6,54 +6,38 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      events: [],
-      // Parameter for search to occur
-      searchBy: '',
-      name: '',
-      eventDate: ''
+      services: [
+      { id: 1, name: 'Service A', description: 'Description of Service A' },
+      { id: 2, name: 'Service B', description: 'Description of Service B' },
+      { id: 3, name: 'Service C', description: 'Description of Service C' },
+      { id: 4, name: 'Service D', description: 'Description of Service D' },
+      { id: 5, name: 'Service E', description: 'Description of Service E' },
+      { id: 6, name: 'Service F', description: 'Description of Service F' },
+      { id: 7, name: 'Service G', description: 'Description of Service G' },
+      ]
     }
   },
   mounted() {
-    this.getEvents()
+    this.getServices()
   },
   methods: {
-    // better formattedDate
-    formattedDate(datetimeDB) {
-      const dt = DateTime.fromISO(datetimeDB, {
-        zone: 'utc'
-      })
-      return dt
-        .setZone(DateTime.now().zoneName, { keepLocalTime: true })
-        .toLocaleString()
+    createService(name, description) {
+      const id = Math.max(...this.services.map(service => service.id)) + 1
+      this.services.push({ id, name, description })
     },
-    handleSubmitForm() {
-      let endpoint = ''
-      if (this.searchBy === 'Event Name') {
-        endpoint = `events/search/?name=${this.name}&searchBy=name`
-      } else if (this.searchBy === 'Event Date') {
-        endpoint = `events/search/?eventDate=${this.eventDate}&searchBy=date`
-      }
-      axios.get(`${apiURL}/${endpoint}`).then((res) => {
-        this.events = res.data
-      })
-    },
-    // abstracted method to get events
-    getEvents() {
-      axios.get(`${apiURL}/events`).then((res) => {
-        this.events = res.data
-      })
-      window.scrollTo(0, 0)
-    },
-    clearSearch() {
-      // Resets all the variables
-      this.searchBy = ''
-      this.name = ''
-      this.eventDate = ''
 
-      this.getEvents()
+    getAllServices() {
+      return this.services
     },
-    editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+    
+    updateService(id, name, description) {
+      const index = this.services.findIndex(service => service.id === id)
+      this.services.splice(index, 1, { id, name, description })
+    },
+
+    deleteService(id) {
+      const index = this.services.findIndex(service => service.id === id)
+      this.services.splice(index, 1)
     }
   }
 }
@@ -68,93 +52,31 @@ export default {
         List of Event Services
       </h1>
     </div>
-    <div class="px-10 pt-20">
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
-        <h2 class="text-2xl font-bold">Search Event By</h2>
-        <!-- Displays Client Name search field -->
-        <div class="flex flex-col">
-          <select
-            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            v-model="searchBy"
-          >
-            <option value="Event Name">Event Name</option>
-            <option value="Event Date">Event Date</option>
-          </select>
-        </div>
-        <div class="flex flex-col" v-if="searchBy === 'Event Name'">
-          <label class="block">
-            <input
-              type="text"
-              class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              v-model="name"
-              v-on:keyup.enter="handleSubmitForm"
-              placeholder="Enter event name"
-            />
-          </label>
-        </div>
-        <!-- Displays event date search field -->
-        <div class="flex flex-col" v-if="searchBy === 'Event Date'">
-          <input
-            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            type="date"
-            v-model="eventDate"
-            v-on:keyup.enter="handleSubmitForm"
-          />
-        </div>
-      </div>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
-        <div></div>
-        <div></div>
-        <div class="mt-5 grid-cols-2">
-          <button
-            class="mr-10 border border-red-700 bg-white text-red-700 rounded"
-            @click="clearSearch"
-            type="submit"
-          >
-            Clear Search
-          </button>
-          <button
-            class="bg-red-700 text-white rounded"
-            @click="handleSubmitForm"
-            type="submit"
-          >
-            Search Event
-          </button>
-        </div>
-      </div>
-    </div>
-
     <hr class="mt-10 mb-10" />
-    <!-- Display Found Data -->
+    <!-- Display Data -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
     >
       <div class="ml-10">
-        <h2 class="text-2xl font-bold">List of Event Services</h2>
-        <h3 class="italic">Click table row to edit/display an entry</h3>
+        <!-- left empty column -->
       </div>
+      
       <div class="flex flex-col col-span-2">
         <table class="min-w-full shadow-md rounded">
           <thead class="bg-gray-50 text-xl">
             <tr>
-              <th class="p-4 text-left">Event Name</th>
-              <th class="p-4 text-left">Event Date</th>
-              <th class="p-4 text-left">Event Address</th>
+              <th class="p-4 text-left">Service Name</th>
+              <th class="p-4 text-left">Service Description</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editEvent(event._id)"
-              v-for="event in events"
-              :key="event._id"
+              @click="getAllServices(service._id)"
+              v-for="service in services"
+              :key="service._id"
             >
-              <td class="p-2 text-left">{{ event.name }}</td>
-              <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">{{ service.name }}</td>
+              <td class="p-2 text-left">{{ service.description }}</td>
             </tr>
           </tbody>
         </table>
