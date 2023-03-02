@@ -1,3 +1,7 @@
+# References
+
+- [Creation and Display of Doughnut Chart](https://www.chartjs.org/docs/latest/samples/other-charts/doughnut.html)
+
 # Data Platform Frontend
 
 This project uses [VueJS 3](https://vuejs.org/) with [Vite](https://vitejs.dev/) and [TailwindCSS](https://tailwindcss.com/).
