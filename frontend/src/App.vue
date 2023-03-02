@@ -6,7 +6,7 @@ export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Group 24'
     }
   },
   created() {
@@ -73,6 +73,16 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/eventServices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >dashboard</span
+                >
+                Event Services
               </router-link>
             </li>
           </ul>

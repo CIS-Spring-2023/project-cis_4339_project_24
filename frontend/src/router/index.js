@@ -39,6 +39,11 @@ const routes = [
     name: 'eventdetails',
     props: true,
     component: () => import('../components/eventDetails.vue')
+  },
+  {
+    path: '/eventServices',
+    name: 'eventServices',
+    component: () => import('../components/eventServices.vue')
   }
 ]
 const router = createRouter({
