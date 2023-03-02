@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import { DateTime } from 'luxon'
 import axios from 'axios'
@@ -13,7 +14,7 @@ export default {
       { id: 4, name: 'Service D', description: 'Description of Service D' },
       { id: 5, name: 'Service E', description: 'Description of Service E' },
       { id: 6, name: 'Service F', description: 'Description of Service F' },
-      { id: 7, name: 'Service G', description: 'Description of Service G' },
+      { id: 7, name: 'Service G', description: 'Description of Service G' }
       ]
     }
   },
@@ -42,45 +43,34 @@ export default {
   }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <template>
-  <main>
-    <div>
-      <h1
-        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
-      >
-        List of Event Services
-      </h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+    <div class="ml-10">
+        <!-- Empty left column -->
     </div>
-    <hr class="mt-10 mb-10" />
-    <!-- Display Data -->
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-    >
-      <div class="ml-10">
-        <!-- left empty column -->
-      </div>
-      
-      <div class="flex flex-col col-span-2">
-        <table class="min-w-full shadow-md rounded">
-          <thead class="bg-gray-50 text-xl">
-            <tr>
+    <div class="flex flex-col col-span-2">
+      <table class="min-w-full shadow-md rounded">
+        <thead class="bg-gray-50 text-xl">
+          <tr>
               <th class="p-4 text-left">Service Name</th>
               <th class="p-4 text-left">Service Description</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-300">
-            <tr
-              @click="getAllServices(service._id)"
-              v-for="service in services"
-              :key="service._id"
-            >
-              <td class="p-2 text-left">{{ service.name }}</td>
-              <td class="p-2 text-left">{{ service.description }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <th class="p-4 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr v-for="service in services" :key="service._id">
+            <td>{{ service.name }}</td>
+            <td>{{ service.description }}</td>
+            <td>
+              <button @click.prevent="updateService(service.id,service.name, service.desctiption)" class="btn btn-danger mx-2">Edit
+              </button>
+              <!-- //<router-link :to="{name: 'edit', params: { id: service._id }}" class="btn btn-success ">Edit</router-link> -->
+              <button @click.prevent="deleteService(service.id)" class="btn btn-danger mx-2">Delete</button>
+            </td>  
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </main>
+  </div>
 </template>
