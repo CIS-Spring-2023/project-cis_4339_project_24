@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, email, alpha, numeric } from '@vuelidate/validators'
@@ -100,6 +101,7 @@ export default {
   }
 }
 </script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
     <h1

@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, email, alpha, numeric } from '@vuelidate/validators'
@@ -147,6 +148,7 @@ export default {
   }
 }
 </script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
     <h1
@@ -439,4 +441,5 @@ export default {
     </div>
   </main>
 </template>
+<!-- eslint-disable prettier/prettier -->
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

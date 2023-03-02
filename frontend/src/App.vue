@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
@@ -16,6 +17,7 @@ export default {
   }
 }
 </script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main class="flex flex-row">
     <div id="_container" class="h-screen">
@@ -102,6 +104,7 @@ export default {
     </div>
   </main>
 </template>
+<!-- eslint-disable prettier/prettier -->
 <style>
 #_container {
   background-color: #c8102e;

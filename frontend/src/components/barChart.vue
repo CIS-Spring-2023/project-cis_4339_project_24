@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
@@ -60,6 +61,7 @@ export default {
   }
 }
 </script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <div class="shadow-lg rounded-lg overflow-hidden">
     <canvas class="p-10" ref="attendanceChart"></canvas>

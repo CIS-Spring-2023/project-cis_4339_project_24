@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import { DateTime } from 'luxon'
 import axios from 'axios'
@@ -69,7 +70,7 @@ export default {
   }
 }
 </script>
-
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
     <div>

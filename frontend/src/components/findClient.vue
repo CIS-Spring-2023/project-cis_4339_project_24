@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
@@ -51,6 +52,7 @@ export default {
   }
 }
 </script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
     <div>
@@ -134,9 +136,7 @@ export default {
 
     <hr class="mt-10 mb-10" />
     <!-- Display Found Data -->
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
       <div class="ml-10">
         <h2 class="text-2xl font-bold">List of Clients</h2>
         <h3 class="italic">Click table row to edit/display an entry</h3>

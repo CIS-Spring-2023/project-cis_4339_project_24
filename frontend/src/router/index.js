@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createRouter, createWebHistory } from 'vue-router'
 
 // make all paths and names lowercase for consistency
