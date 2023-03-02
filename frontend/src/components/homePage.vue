@@ -3,11 +3,13 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
+import ZipChart from './donutChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   components: {
-    AttendanceChart
+    AttendanceChart,
+    ZipChart
   },
   data() {
     return {
@@ -132,6 +134,10 @@ export default {
               </p>
             </div>
             <!-- End of error alert -->
+          </div>
+          <div>
+            <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Doughnut Chart</h2>
+            <ZipChart></ZipChart>
           </div>
         </div>
       </div>
