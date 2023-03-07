@@ -136,7 +136,7 @@ export default {
             <!-- End of error alert -->
           </div>
           <div>
-            <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Doughnut Chart</h2>
+            <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Clients by Zip Code</h2>
             <ZipChart></ZipChart>
           </div>
         </div>
