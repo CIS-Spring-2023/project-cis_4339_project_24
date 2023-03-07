@@ -78,6 +78,16 @@ export default {
               </router-link>
             </li>
             <li>
+              <router-link to="/serviceForm">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >dashboard</span
+                >
+                Create Service
+              </router-link>
+            </li>
+            <li>
               <router-link to="/eventServices">
                 <span
                   style="position: relative; top: 6px"
@@ -85,6 +95,16 @@ export default {
                   >dashboard</span
                 >
                 Event Services
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/editServices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >dashboard</span
+                >
+                Edit Services
               </router-link>
             </li>
           </ul>

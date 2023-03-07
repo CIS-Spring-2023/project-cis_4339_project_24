@@ -45,6 +45,16 @@ const routes = [
     path: '/eventServices',
     name: 'eventServices',
     component: () => import('../components/eventServices.vue')
+  },
+  {
+    path: '/editServices',
+    name: 'editServices',
+    component: () => import('../components/editServices.vue')
+  },
+  {
+    path: '/serviceForm',
+    name: 'serviceForm',
+    component: () => import('../components/serviceForm.vue')
   }
 ]
 const router = createRouter({

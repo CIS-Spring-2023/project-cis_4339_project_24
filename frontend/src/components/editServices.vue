@@ -25,6 +25,16 @@ export default {
 
     getAllServices() {
       return this.services
+    },
+    
+    updateService(id, name, description) {
+      const index = this.services.findIndex(service => service.id === id)
+      this.services.splice(index, 1, { id, name, description })
+    },
+
+    deleteService(id) {
+      const index = this.services.findIndex(service => service.id === id)
+      this.services.splice(index, 1)
     }
   }
 }
@@ -44,13 +54,20 @@ export default {
               <th class="p-4 text-left">Service Name</th>
               <th class="p-4 text-left">Service Description</th>
               <th class="p-4 text-left">Service Status</th>
+              <th class="p-4 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
         <tr v-for="service in services" :key="service._id">
             <td>{{ service.name }}</td>
             <td>{{ service.description }}</td>
-            <td>{{ service.status }}</td> 
+            <td>{{ service.status }}</td>
+            <td>
+              <button @click.prevent="updateService(service.id,service.name, service.desctiption)" class="btn btn-danger mx-2">Edit
+              </button>
+              <!-- //<router-link :to="{name: 'edit', params: { id: service._id }}" class="btn btn-success ">Edit</router-link> -->
+              <button @click.prevent="deleteService(service.id)" class="btn btn-danger mx-2">Change Status</button>
+            </td>  
           </tr>
         </tbody>
       </table>
