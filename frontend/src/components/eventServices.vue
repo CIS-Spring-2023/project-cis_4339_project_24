@@ -14,9 +14,6 @@ export default {
       ]
     }
   },
-  mounted() {
-    this.getServices()
-  },
   methods: {
     getAllServices() {
       return this.services

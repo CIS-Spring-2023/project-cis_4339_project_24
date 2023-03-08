@@ -14,12 +14,16 @@ export default {
       ]
     }
   },
-  mounted() {
-    this.getServices()
-  },
   methods: {
     getAllServices() {
       return this.services
+    },
+    deleteService(index) {
+      // Show confirmation dialog
+      if (confirm("Are you sure you want to delete this service?")) {
+        // removes service
+        this.services.splice(index, 1);
+      }
     }
   }
 }
@@ -46,7 +50,7 @@ export default {
                         <th class="p-4 text-left">Service Name</th>
                         <th class="p-4 text-left">Service Description</th>
                         <th class="p-4 text-left">Service Status</th>
-                        <th class="p-4 text-left">Action</th>
+                        <th class="p-4 text-left">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
@@ -59,8 +63,8 @@ export default {
                         </td>
                         <td class="p-3 text-left">{{ service.status }}</td>
                         <td>
-                          <router-link :to="{name: 'updateService', params: { id: service.id }}" 
-                          class="bg-red-700 text-white rounded">Edit</router-link>
+                          <router-link :to="{name: 'updateService', params: { id: service.id }}" class="bg-green-500 text-white rounded">Edit</router-link>
+                          <button @click.prevent="deleteService(service._id)" class="bg-red-600 text-white rounded">Delete</button>
                         </td>
                     </tr>
                     </tbody>

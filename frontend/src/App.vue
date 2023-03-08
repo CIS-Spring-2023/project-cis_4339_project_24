@@ -1,5 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
@@ -14,6 +15,10 @@ export default {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
+  },
+  setup() {
+    const user = useLoggedInUserStore();
+    return { user };
   }
 }
 </script>
@@ -28,6 +33,16 @@ export default {
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
             <li>
+              <router-link to="/logIn">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                Log In
+              </router-link>
+            </li>
+            <li>
               <router-link to="/">
                 <span
                   style="position: relative; top: 6px"
@@ -38,7 +53,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/intakeform">
+              <router-link v-if="user.isLoggedIn" to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -48,7 +63,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/eventform">
+              <router-link v-if="user.isLoggedIn" to="/eventform">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -58,7 +73,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/findclient">
+              <router-link v-if="user.isLoggedIn" to="/findclient">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -68,7 +83,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/findevents">
+              <router-link v-if="user.isLoggedIn" to="/findevents">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -78,31 +93,31 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/serviceForm">
+              <router-link v-if="user.isLoggedIn" to="/eventServices">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >dashboard</span
-                >
-                Create Service
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/eventServices">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >dashboard</span
+                  >list</span
                 >
                 Event Services
               </router-link>
             </li>
             <li>
-              <router-link to="/editServices">
+              <router-link v-if="user.isLoggedIn" to="/serviceForm">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >dashboard</span
+                  >create</span
+                >
+                Create Service
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="user.isLoggedIn" to="/editServices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >edit</span
                 >
                 Edit Services
               </router-link>
