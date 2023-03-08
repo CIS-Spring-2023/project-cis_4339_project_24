@@ -20,16 +20,6 @@ export default {
   methods: {
     getAllServices() {
       return this.services
-    },
-    
-    updateService(id, name, description) {
-      const index = this.services.findIndex(service => service.id === id)
-      this.services.splice(index, 1, { id, name, description })
-    },
-
-    deleteService(id) {
-      const index = this.services.findIndex(service => service.id === id)
-      this.services.splice(index, 1)
     }
   }
 }
@@ -47,7 +37,7 @@ export default {
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
             <div class="ml-10">
             <h2 class="text-2xl font-bold">List of Services</h2>
-            <h3 class="italic">Click either action button make changes to it desired service</h3>
+            <h3 class="italic">Click table row to edit/display an entry</h3>
             </div>
             <div class="flex flex-col col-span-2">
                 <table class="min-w-full shadow-md rounded">
@@ -56,23 +46,22 @@ export default {
                         <th class="p-4 text-left">Service Name</th>
                         <th class="p-4 text-left">Service Description</th>
                         <th class="p-4 text-left">Service Status</th>
-                        <th class="p-4 text-left">Actions Status</th>
+                        <th class="p-4 text-left">Action</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
                     <tr v-for="service in services" :key="service._id">
-                        <td class="p-2 text-left">
+                        <td class="p-3 text-left">
                         {{ service.name }}
                         </td>
-                        <td class="p-2 text-left">
+                        <td class="p-3 text-left">
                         {{ service.description }}
                         </td>
-                        <td class="p-2 text-left">{{ service.status }}</td>
+                        <td class="p-3 text-left">{{ service.status }}</td>
                         <td>
-                            <button @click.prevent="updateService(service.id,service.name, service.description)" class="btn btn-danger mt-3">Edit
-                            </button>
-                            <button @click.prevent="deleteService(service.id)" class="btn btn-danger mt-3">Change Status</button>
-                        </td> 
+                          <router-link :to="{name: 'updateService', params: { id: service.id }}" 
+                          class="bg-red-700 text-white rounded">Edit</router-link>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

@@ -34,7 +34,7 @@ export default {
         this.newService.status = '';
       }
     }
-  };
+}
 </script>
 <!-- eslint-disable prettier/prettier -->
 <template>
