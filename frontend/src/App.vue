@@ -32,18 +32,41 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
-            <li>
-              <router-link to="/logIn">
+            <li v-if="!user.isLoggedIn && !user.isLoggedIn2">
+              <router-link to="/logIn" class="nav-link">
                 <span
-                  style="position: relative; top: 6px"
+                  style="position: relative; top: 6px; "
                   class="material-icons"
                   >login</span
                 >
                 Log In
               </router-link>
             </li>
+            <li class="nav-item dropdown" v-if="user.isLoggedIn || user.isLoggedIn2">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarUserMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+              <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >person</span
+                > Welcome, {{ user.name }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarUserMenuLink">
+                <li class="nav-item">
+                  <a href="">
+                    <span @click="store.logout()" class="material-icons">logout</span> Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li>
-              <router-link to="/">
+              <router-link to="/" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -53,27 +76,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="user.isLoggedIn" to="/intakeform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >people</span
-                >
-                Client Intake Form
-              </router-link>
-            </li>
-            <li>
-              <router-link v-if="user.isLoggedIn" to="/eventform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >event</span
-                >
-                Create Event
-              </router-link>
-            </li>
-            <li>
-              <router-link v-if="user.isLoggedIn" to="/findclient">
+              <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/findclient" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -83,7 +86,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="user.isLoggedIn" to="/findevents">
+              <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/findevents" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -93,7 +96,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="user.isLoggedIn" to="/eventServices">
+              <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/eventServices" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -103,7 +106,27 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="user.isLoggedIn" to="/serviceForm">
+              <router-link v-if="user.isLoggedIn" to="/intakeform" class="nav-link">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >people</span
+                >
+                Client Intake Form
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="user.isLoggedIn" to="/eventform" class="nav-link">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >event</span
+                >
+                Create Event
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="user.isLoggedIn" to="/serviceForm" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -113,7 +136,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link v-if="user.isLoggedIn" to="/editServices">
+              <router-link v-if="user.isLoggedIn" to="/editServices" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -145,5 +168,8 @@ export default {
   background-color: #c8102e;
   color: white;
   padding: 18px;
+}
+a {
+  text-decoration: none;
 }
 </style>

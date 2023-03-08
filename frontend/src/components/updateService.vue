@@ -78,7 +78,7 @@ export default {
                     <button
                       @click="updateService"
                       type="submit"
-                      class="bg-green-700 text-white rounded"
+                      class="bg-green-600 text-white rounded"
                     >
                       Update Service
                     </button>
@@ -86,10 +86,10 @@ export default {
                   <div class="flex justify-between mt-10 mr-20">
                     <button
                       type="reset"
-                      class="border border-red-700 bg-white text-red-700 rounded"
+                      class="bg-red-600 text-white rounded"
                       @click="$router.back()"
                     >
-                      Go back
+                      Cancel
                     </button>
                   </div>
                 </div>

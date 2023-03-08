@@ -3,6 +3,8 @@ import { createApp, markRaw } from 'vue'
 import router from './router'
 import App from './App.vue'
 import './index.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 
 //state managment library
 import { createPinia } from 'pinia'
