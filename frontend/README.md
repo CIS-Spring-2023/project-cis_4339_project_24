@@ -13,7 +13,7 @@ Log in Credentials:
 
 - Viewer role:
     - username: viewer
-    -password: viewer
+    - password: viewer
 
 
 # References
