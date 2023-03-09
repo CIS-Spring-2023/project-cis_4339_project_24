@@ -24,7 +24,21 @@ export default {
           zip: ''
         },
         description: ''
-      }
+      },
+      services: [
+      { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
+      { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
+      { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
+      { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
+      { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
+      { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
+      { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
+      ]
+    }
+  },
+  computed: {
+    activeServices() {
+      return this.services.filter(service => service.status === 'Active')
     }
   },
   methods: {
@@ -136,63 +150,22 @@ export default {
           <div></div>
           <div></div>
           <!-- form field -->
+          <!-- list of active services as checkboxes-->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
-            <div>
-              <label for="familySupport" class="inline-flex items-center">
-                <input
+            <div v-for="service in activeServices" :key="service.id">
+              <input
                   type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
+                  :id="service.id"
+                  :value="service.id"
                   v-model="event.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="event.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
-              </label>
+              <label :for="service.id" class="ml-2">   {{ service.name }}</label>
             </div>
           </div>
         </div>
-
         <!-- grid container -->
         <div
           class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"

@@ -58,13 +58,15 @@ export default {
                         <td class="p-3 text-left">
                         {{ service.name }}
                         </td>
-                        <td class="p-3 text-left">
+                        <td class="p-3 text-left" style="white-space: nowrap;">
                         {{ service.description }}
                         </td>
                         <td class="p-3 text-left">{{ service.status }}</td>
                         <td>
-                          <router-link :to="{name: 'updateService', params: { id: service.id }}" class="bg-green-500 text-white rounded">Edit</router-link>
-                          <button @click.prevent="deleteService(service._id)" class="bg-red-600 text-white rounded">Delete</button>
+                          <div class="btn-group">
+                          <router-link :to="{name: 'updateService', params: { id: service.id }}" class="btn btn-success">Edit</router-link>
+                          <button @click.prevent="deleteService(service._id)" class="btn btn-danger mx-2">Delete</button>
+                          </div>
                         </td>
                     </tr>
                     </tbody>
@@ -76,3 +78,10 @@ export default {
         </div>
     </main>
 </template>
+<!-- eslint-disable prettier/prettier -->
+<style>
+.btn-group {
+  display: flex;
+  flex-direction: row;
+}
+</style>

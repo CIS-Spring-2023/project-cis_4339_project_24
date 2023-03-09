@@ -59,6 +59,7 @@ const routes = [
   {
     path: '/updateService/:id',
     name: 'updateService',
+    props: true,
     component: () => import('../components/updateService.vue')
   },
   {

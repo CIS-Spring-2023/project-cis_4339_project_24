@@ -59,8 +59,8 @@ export default {
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarUserMenuLink">
                 <li class="nav-item">
-                  <a href="">
-                    <span @click="store.logout()" class="material-icons">logout</span> Logout
+                  <a href="/">
+                    <span @click="store.logout()" class="material-icons">logout</span>Logout
                   </a>
                 </li>
               </ul>

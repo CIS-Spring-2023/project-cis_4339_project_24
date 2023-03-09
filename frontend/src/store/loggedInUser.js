@@ -29,12 +29,11 @@ export const useLoggedInUserStore = defineStore({
       }
     },
     logout() {
-      this.patch({
+      this.$patch({
         name: "",
         isLoggedIn: false,
         isLoggedIn2: false
       });
-
       // we could do other stuff like redirecting the user
     }
   }

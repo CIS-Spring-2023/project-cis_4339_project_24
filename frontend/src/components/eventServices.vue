@@ -19,7 +19,7 @@ export default {
       return this.services
     }
   }
-}
+};
 </script>
 <!-- eslint-disable prettier/prettier -->
 <template>
@@ -37,7 +37,7 @@ export default {
       <h3 class="italic">Includes all active and inactive services</h3>
       </div>
       <div class="flex flex-col col-span-2">
-        <table class="min-w-full shadow-md rounded">
+          <table class="min-w-full shadow-md rounded">
               <thead class="bg-gray-50 text-xl">
               <tr>
                   <th class="p-4 text-left">Service Name</th>
@@ -56,10 +56,10 @@ export default {
                   <td class="p-2 text-left">{{ service.status }}</td>
               </tr>
               </tbody>
-        </table>
-        <br>
-        <br>
-        <br>
+          </table>
+          <br>
+          <br>
+          <br>
       </div>
     </div>
   </main>
