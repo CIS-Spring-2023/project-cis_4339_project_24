@@ -33,11 +33,12 @@ export default {
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
               >
               <h2 class="text-2xl font-bold">Service Details</h2>
-              <!-- form field -->
+              <!-- form field: update service name -->
               <div class="flex flex-col">
                   <label class="block">
                   <span class="text-gray-700">Service Name</span>
                   <span style="color: #ff0000">*</span>
+                  <!-- service name is required for an update to be made -->
                   <input 
                       type="text"
                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -45,10 +46,11 @@ export default {
                   >
                   </label>
               </div>
-              <!-- form field -->
+              <!-- form field: update service description -->
               <div class="flex flex-col">
                   <label class="block">
                   <span class="text-gray-700">Service Description</span>
+                  <!-- service description is optional -->
                   <input 
                       type="text"
                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -56,11 +58,12 @@ export default {
                   >
                   </label>
               </div>
-              <!-- form field -->
+              <!-- form field: update service description -->
               <div class="flex flex-col">
                   <label class="block">
                   <span class="text-gray-700">Service Status</span>
                   <span style="color: #ff0000">*</span>
+                  <!-- service status is required for an update to be made -->
                   <input 
                       type="text"
                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -69,11 +72,11 @@ export default {
                   </label>
               </div>
               </div>
-              <!-- submit button -->
               <!-- grid container -->
                 <div
                   class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
                 >
+                  <!-- update button, redirects user back to the editServices.vue page after a successful update -->
                   <div class="flex justify-between mt-10 mr-20">
                     <button
                       @click="updateService"
@@ -83,6 +86,7 @@ export default {
                       Update Service
                     </button>
                   </div>
+                  <!-- cancel button, redirects user back to the editServices.vue page -->
                   <div class="flex justify-between mt-10 mr-20">
                     <button
                       type="reset"

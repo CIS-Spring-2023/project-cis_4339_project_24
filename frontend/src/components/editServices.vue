@@ -3,25 +3,30 @@
 export default {
   data() {
     return {
+      // hardcoded list of event services
       services: [
-      { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-      { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-      { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-      { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-      { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-      { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-      { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-      ]
+        { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
+        { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
+        { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
+        { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
+        { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
+        { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
+        { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
+        ]
     }
   },
   methods: {
+    // would return list of all services when using API
     getAllServices() {
       return this.services
     },
-    deleteService(index) {
+    // function to permanently delete a service
+    deleteService(service) {
       // Show confirmation dialog
       if (confirm("Are you sure you want to delete this service?")) {
-        // removes service
+        // finds index of service to be deleted
+        const index = this.services.indexOf(service)
+        // removes service from array
         this.services.splice(index, 1);
       }
     }
@@ -38,6 +43,7 @@ export default {
         </h1>
         <br>
         <br>
+        <!-- displays list of all services -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
             <div class="ml-10">
             <h2 class="text-2xl font-bold">List of Services</h2>
@@ -50,11 +56,13 @@ export default {
                         <th class="p-4 text-left">Service Name</th>
                         <th class="p-4 text-left">Service Description</th>
                         <th class="p-4 text-left">Service Status</th>
+                        <!-- column that displays option buttons -->
                         <th class="p-4 text-left">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
-                    <tr v-for="service in services" :key="service._id">
+                    <!-- allows option buttons to function with services in their corresponding row -->
+                    <tr v-for="service in services" :key="service.id">
                         <td class="p-3 text-left">
                         {{ service.name }}
                         </td>
@@ -62,10 +70,11 @@ export default {
                         {{ service.description }}
                         </td>
                         <td class="p-3 text-left">{{ service.status }}</td>
+                        <!-- button options to update or permanently delete a service in their respective row-->
                         <td>
                           <div class="btn-group">
                           <router-link :to="{name: 'updateService', params: { id: service.id }}" class="btn btn-success">Edit</router-link>
-                          <button @click.prevent="deleteService(service._id)" class="btn btn-danger mx-2">Delete</button>
+                          <button @click.prevent="deleteService(service)" class="btn btn-danger mx-2">Delete</button>
                           </div>
                         </td>
                     </tr>

@@ -3,18 +3,20 @@
 export default {
   data() {
     return {
+      // hardcoded list of event services
       services: [
-      { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-      { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-      { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-      { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-      { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-      { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-      { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-      ]
+        { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
+        { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
+        { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
+        { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
+        { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
+        { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
+        { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
+        ]
     }
   },
   methods: {
+    // would return list of all services when using API
     getAllServices() {
       return this.services
     }
@@ -31,6 +33,7 @@ export default {
     </h1>
     <br>
     <br>
+    <!-- displays list of all services -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
       <div class="ml-10">
       <h2 class="text-2xl font-bold">List of Services</h2>

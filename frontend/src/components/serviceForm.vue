@@ -3,16 +3,18 @@
 export default {
   data() {
     return {
+        // hardcoded list of event services
         services: [
-      { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-      { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-      { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-      { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-      { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-      { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-      { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-      ],
-      newService: { name: '', description: '', status: '' }
+            { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
+            { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
+            { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
+            { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
+            { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
+            { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
+            { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
+            ],
+            // takes input and appends new service to the array of services
+            newService: { name: '', description: '', status: '' }
     }
   },
     methods: {
@@ -50,11 +52,12 @@ export default {
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
                 >
                 <h2 class="text-2xl font-bold">Service Details</h2>
-                <!-- form field -->
+                <!-- form field: add service name -->
                 <div class="flex flex-col">
                     <label class="block">
                     <span class="text-gray-700">Service Name</span>
                     <span style="color: #ff0000">*</span>
+                    <!-- service name is required to add as a new service -->
                     <input 
                         type="text"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -62,10 +65,11 @@ export default {
                     >
                     </label>
                 </div>
-                <!-- form field -->
+                <!-- form field: add service description -->
                 <div class="flex flex-col">
                     <label class="block">
                     <span class="text-gray-700">Service Description</span>
+                    <!-- service description is optional -->
                     <input 
                         type="text"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -73,11 +77,12 @@ export default {
                     >
                     </label>
                 </div>
-                <!-- form field -->
+                <!-- form field: add service current status -->
                 <div class="flex flex-col">
                     <label class="block">
                     <span class="text-gray-700">Service Status</span>
                     <span style="color: #ff0000">*</span>
+                    <!-- service status is required to add as a new service -->
                     <input 
                         type="text"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -88,12 +93,14 @@ export default {
                 </div>
                 <!-- submit button -->
                 <div class="flex justify-between mt-10 mr-20">
+                    <!-- appends new service to the list of services displayed in this same page -->
                     <button class="bg-red-700 text-white rounded" type="submit">
                     Add Service
                     </button>
                 </div>
             </form>
         </div>
+        <!-- displays list of all services -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
             <div class="ml-10">
             <h2 class="text-2xl font-bold">List of Services</h2>

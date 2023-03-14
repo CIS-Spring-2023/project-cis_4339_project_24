@@ -1,6 +1,6 @@
 # Sprint 2
 
-To demonstrate user roles and the nagivaition or modification privileges in the application
+To demonstrate user roles and their nagivaition or modification privileges in the application
 for Sprint 2, we have hardcoded user credentials corresponding to their respective role. For example,
 when logging in with editor credentials, all applications pages will be rendered including their respective
 functionalities. On the other hand, when logging in with viewer credentials, only dashboard, find client,
@@ -14,6 +14,14 @@ Log in Credentials:
 - Viewer role:
     - username: viewer
     - password: viewer
+
+
+# Note
+
+Soft deletion (active/inactive) of services can be performed through the edit button in the 
+edit services menu tab. When a user clicks on the edit button on a row of services, it will
+redirect the user on a different page to make changes to the service name, description (optional),
+and status (active/inactive). The delete button in the actions column is to permanently delete a service.
 
 
 # References
@@ -32,6 +40,16 @@ Log in Credentials:
 - Code used from CIS 4339 for Sprint 2:
     - Module 7 - vue-student-management-app-pinia: Log in feature, 
     - Module 5 - vue-student-management-app: Edit and Delete Features in a List
+
+
+# Additional Packages Installed
+
+We have instlled the following additional packages in the development of Sprint 2 to function with 
+the front end portion of this project.
+
+    npm install pinia
+    
+    npm install bootstrap
 
 
 # Data Platform Frontend

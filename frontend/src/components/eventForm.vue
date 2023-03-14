@@ -25,19 +25,21 @@ export default {
         },
         description: ''
       },
+      // hardcoded list of event services
       services: [
-      { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-      { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-      { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-      { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-      { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-      { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-      { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-      ]
+        { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
+        { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
+        { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
+        { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
+        { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
+        { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
+        { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
+        ]
     }
   },
   computed: {
     activeServices() {
+      // uses filter function to only display services with an "Active" status
       return this.services.filter(service => service.status === 'Active')
     }
   },
@@ -150,9 +152,9 @@ export default {
           <div></div>
           <div></div>
           <!-- form field -->
-          <!-- list of active services as checkboxes-->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
+            <!-- list of active services as checkboxes-->
             <div v-for="service in activeServices" :key="service.id">
               <input
                   type="checkbox"

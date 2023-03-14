@@ -17,6 +17,7 @@ export default {
     })
   },
   setup() {
+    // function that checks if a user is logged in
     const user = useLoggedInUserStore();
     return { user };
   }
@@ -32,6 +33,11 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
+            <!-- Start: Login page -->
+            <!-- any user can see login tab upon openning the web app -->
+
+              <!-- hides login menu tab after either user logs in -->
+              <!-- login tab appears again after users logout -->
             <li v-if="!user.isLoggedIn && !user.isLoggedIn2">
               <router-link to="/logIn" class="nav-link">
                 <span
@@ -42,6 +48,7 @@ export default {
                 Log In
               </router-link>
             </li>
+            <!-- check which user logs in and displays a welcome message with users corresponding name -->
             <li class="nav-item dropdown" v-if="user.isLoggedIn || user.isLoggedIn2">
               <a
                 class="nav-link dropdown-toggle"
@@ -57,15 +64,21 @@ export default {
                   >person</span
                 > Welcome, {{ user.name }}
               </a>
+              <!-- Drop down menu for user to logout from -->
               <ul class="dropdown-menu" aria-labelledby="navbarUserMenuLink">
                 <li class="nav-item">
+                  <!-- users are redirected to the dashboard after they log out -->
                   <a href="/">
                     <span @click="store.logout()" class="material-icons">logout</span>Logout
                   </a>
                 </li>
               </ul>
             </li>
+            <!-- End: Login page -->
+
+            <!-- Start: Dashboard page -->
             <li>
+              <!-- any user can see dashboard tab upon openning the web app -->
               <router-link to="/" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -75,7 +88,11 @@ export default {
                 Dashboard
               </router-link>
             </li>
+            <!-- End: Dashboard page -->
+
+            <!-- Start: Find client page -->
             <li>
+              <!-- gives access to both users to view this page -->
               <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/findclient" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -85,7 +102,11 @@ export default {
                 Find Client
               </router-link>
             </li>
+            <!-- End: Find client page -->
+
+            <!-- Start: Find event page -->
             <li>
+              <!-- gives access to both users to view this page -->
               <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/findevents" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -95,7 +116,11 @@ export default {
                 Find Event
               </router-link>
             </li>
+            <!-- End: Find event page -->
+
+            <!-- Start: Event services page -->
             <li>
+              <!-- gives access to both users to view this page -->
               <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/eventServices" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -105,7 +130,11 @@ export default {
                 Event Services
               </router-link>
             </li>
+            <!-- End: Event services page -->
+
+            <!-- Start: Client intake form page -->
             <li>
+              <!-- gives access only to editor to use this page -->
               <router-link v-if="user.isLoggedIn" to="/intakeform" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -115,7 +144,11 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
+            <!-- End: Client intake form page -->
+
+            <!-- Start: Create event form page -->
             <li>
+              <!-- gives access only to editor to use this page -->
               <router-link v-if="user.isLoggedIn" to="/eventform" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -125,7 +158,11 @@ export default {
                 Create Event
               </router-link>
             </li>
+            <!-- End: Create event form page -->
+
+            <!-- Start: Create service form page -->
             <li>
+              <!-- gives access only to editor to use this page -->
               <router-link v-if="user.isLoggedIn" to="/serviceForm" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -135,7 +172,11 @@ export default {
                 Create Service
               </router-link>
             </li>
+            <!-- End: Create service form page -->
+
+            <!-- Start: Edit services form page -->
             <li>
+              <!-- gives access only to editor to use this page -->
               <router-link v-if="user.isLoggedIn" to="/editServices" class="nav-link">
                 <span
                   style="position: relative; top: 6px"
@@ -145,6 +186,7 @@ export default {
                 Edit Services
               </router-link>
             </li>
+            <!-- End: Edit services form page -->
           </ul>
         </nav>
       </header>

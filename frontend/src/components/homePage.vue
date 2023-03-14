@@ -8,7 +8,9 @@ const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   components: {
+    // call to display bar chart
     AttendanceChart,
+    // call to display donut chart
     ZipChart
   },
   data() {
@@ -137,6 +139,7 @@ export default {
           </div>
           <div>
             <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Clients by Zip Code</h2>
+            <!-- displays donut chart -->
             <ZipChart></ZipChart>
           </div>
         </div>
