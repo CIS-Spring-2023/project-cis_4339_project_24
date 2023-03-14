@@ -57,7 +57,7 @@ export default {
       this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     }
   }
-}
+};
 </script>
 <!-- eslint-disable prettier/prettier -->
 <template>

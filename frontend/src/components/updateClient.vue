@@ -146,7 +146,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 <!-- eslint-disable prettier/prettier -->
 <template>
