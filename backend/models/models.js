@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
