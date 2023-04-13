@@ -79,16 +79,18 @@ export default {
                 </div>
                 <!-- form field: add service current status -->
                 <div class="flex flex-col">
-                    <label class="block">
                     <span class="text-gray-700">Service Status</span>
                     <span style="color: #ff0000">*</span>
-                    <!-- service status is required to add as a new service -->
-                    <input 
-                        type="text"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="newService.status" required
-                    >
-                    </label>
+                    <div class="mt-1">
+                        <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio" name="status" value="Active" v-model="newService.status" required>
+                            <span class="ml-2">Active</span>
+                        </label>
+                        <label class="inline-flex items-center ml-6">
+                            <input type="radio" class="form-radio" name="status" value="Inactive" v-model="newService.status" required>
+                            <span class="ml-2">Inactive</span>
+                        </label>
+                    </div>
                 </div>
                 </div>
                 <!-- submit button -->
