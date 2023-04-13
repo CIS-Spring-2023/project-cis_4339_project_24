@@ -19,7 +19,44 @@ router.get('/', (req, res, next) => {
       })
       .sort({ updatedAt: -1 })
       .limit(25)
+})
+
+// GET single service by ID
+router.get('/id/:id', (req, res, next) => {
+    // use findOne instead of find to not return array
+    services.findOne({ _id: req.params.id, orgs: org }, (error, data) => {
+      if (error) {
+        return next(error)
+      } else if (!data) {
+        res.status(400).send('Service not found')
+      } else {
+        res.json(data)
+      }
+    })
   })
+
+// GET services based on search query
+router.get('/search', (req, res, next) => {
+    const dbQuery = { orgs: org }
+    switch (req.query.searchBy) {
+      case 'name':
+        // match event name, no anchor
+        dbQuery.servname = { $regex: `${req.query.servname}`, $options: 'i' }
+        break
+      case 'sstatus':
+        dbQuery.status = { $regex: `^${req.query.status}`, $options: 'i' }
+        break
+      default:
+        return res.status(400).send('invalid searchBy')
+    }
+    services.find(dbQuery, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        res.json(data)
+      }
+    })
+})
 
 // POST new service
 router.post('/', (req, res, next) => {

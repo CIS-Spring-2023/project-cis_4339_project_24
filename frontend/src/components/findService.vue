@@ -6,11 +6,11 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   data() {
     return {
-      services: [],
-      // Parameter for search to occur
-      searchBy: '',
-      sservname: '',
-      sstatus: ''
+        queryData: [],
+        // Parameter for search to occur
+        searchBy: '',
+        servname: '',
+        status: ''
     }
   },
   mounted() {
@@ -20,26 +20,26 @@ export default {
     handleSubmitForm() {
       let endpoint = ''
       if (this.searchBy === 'Service Name') {
-        endpoint = `services/search/?servname=${this.sservname}&searchBy=name`
+        endpoint = `services/search/?servname=${this.servname}&searchBy=name`
       } else if (this.searchBy === 'Service Status') {
-        endpoint = `services/search/?status=${this.sstatus}&searchBy=status`
+        endpoint = `services/search/?status=${this.status}&searchBy=sstatus`
       }
       axios.get(`${apiURL}/${endpoint}`).then((res) => {
-        this.services = res.data
+        this.queryData = res.data
       })
     },
-    // abstracted method to get events
+    // abstracted method to get services
     getServices() {
       axios.get(`${apiURL}/services`).then((res) => {
-        this.services = res.data
+        this.queryData = res.data
       })
       window.scrollTo(0, 0)
     },
     clearSearch() {
       // Resets all the variables
       this.searchBy = ''
-      this.sservname = ''
-      this.sstatus = ''
+      this.servname = ''
+      this.status = ''
 
       this.getServices()
     }
@@ -61,7 +61,7 @@ export default {
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
       >
         <h2 class="text-2xl font-bold">Search Service By</h2>
-        <!-- Displays Client Name search field -->
+        <!-- Displays search field options-->
         <div class="flex flex-col">
           <select
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -71,26 +71,41 @@ export default {
             <option value="Service Status">Service Status</option>
           </select>
         </div>
+        <!-- Displays Service Name search field parameter-->
         <div class="flex flex-col" v-if="searchBy === 'Service Name'">
           <label class="block">
             <input
               type="text"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              v-model="sservname"
+              v-model="servname"
               v-on:keyup.enter="handleSubmitForm"
               placeholder="Enter service name"
             />
           </label>
         </div>
-        <!-- Displays event date search field -->
+        <!-- Displays Service Status search field parameters-->
         <div class="flex flex-col" v-if="searchBy === 'Service Status'">
-          <input
-            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            type="text"
-            v-model="sstatus"
-            v-on:keyup.enter="handleSubmitForm"
-          />
-        </div>
+            <label>
+                <input
+                type="radio"
+                name="status"
+                value="Active"
+                v-model="status"
+                @keyup.enter="handleSubmitForm"
+                />
+                Active
+            </label>
+            <label>
+                <input
+                type="radio"
+                name="status"
+                value="Inactive"
+                v-model="status"
+                @keyup.enter="handleSubmitForm"
+                />
+                Inactive
+            </label>
+            </div>
       </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
@@ -135,7 +150,7 @@ export default {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
-            <tr v-for="service in services" :key="service._id">
+            <tr v-for="service in queryData" :key="service._id">
               <td class="p-2 text-left">{{ service.servname }}</td>
               <td class="p-2 text-left">{{ service.description }}</td>
               <td class="p-2 text-left">{{ service.status }}</td>
