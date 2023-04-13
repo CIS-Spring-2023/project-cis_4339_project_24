@@ -25,21 +25,20 @@ export default {
         },
         description: ''
       },
-      // hardcoded list of event services
-      services: [
-        { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-        { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-        { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-        { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-        { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-        { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-        { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-        ]
+
+      services: []
+    }
+  },
+  async mounted() {
+    try {
+      const response = await axios.get(`${apiURL}/services?status=Active`)
+      this.services = response.data
+    } catch (error) {
+      console.log(error)
     }
   },
   computed: {
     activeServices() {
-      // uses filter function to only display services with an "Active" status
       return this.services.filter(service => service.status === 'Active')
     }
   },
@@ -155,16 +154,16 @@ export default {
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
             <!-- list of active services as checkboxes-->
-            <div v-for="service in activeServices" :key="service.id">
+            <div v-for="service in activeServices" :key="service._id">
               <input
                   type="checkbox"
-                  :id="service.id"
-                  :value="service.id"
+                  :id="service._id"
+                  :value="service._id"
                   v-model="event.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
-              <label :for="service.id" class="ml-2">   {{ service.name }}</label>
+              <label :for="service.id" class="ml-2">   {{ service.servname }}</label>
             </div>
           </div>
         </div>
