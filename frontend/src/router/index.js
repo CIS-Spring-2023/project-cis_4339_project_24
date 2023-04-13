@@ -67,6 +67,11 @@ const routes = [
     path: "/logIn",
     name: "logIn",
     component: () => import('../components/logIn.vue')
+  },
+  {
+    path: '/findService',
+    name: 'findService',
+    component: () => import('../components/findService.vue')
   }
 ]
 const router = createRouter({

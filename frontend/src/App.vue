@@ -118,6 +118,20 @@ export default {
             </li>
             <!-- End: Find event page -->
 
+            <!-- Start: Find service page -->
+            <li>
+              <!-- gives access to both users to view this page -->
+              <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/findService" class="nav-link">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >search</span
+                >
+                Find Service
+              </router-link>
+            </li>
+            <!-- End: Find service page -->
+
             <!-- Start: Event services page -->
             <li>
               <!-- gives access to both users to view this page -->
