@@ -54,6 +54,7 @@ const routes = [
   {
     path: '/serviceForm',
     name: 'serviceForm',
+    props: true,
     component: () => import('../components/serviceForm.vue')
   },
   {

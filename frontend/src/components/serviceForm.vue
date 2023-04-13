@@ -1,40 +1,58 @@
 <!-- eslint-disable prettier/prettier -->
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import axios from 'axios'
+const apiURL = import.meta.env.VITE_ROOT_API
+
 export default {
-  data() {
-    return {
-        // hardcoded list of event services
-        services: [
-            { id: 1, name: 'Service A', description: 'Description of Service A', status: 'Active' },
-            { id: 2, name: 'Service B', description: 'Description of Service B', status: 'Active' },
-            { id: 3, name: 'Service C', description: 'Description of Service C', status: 'Inactive' },
-            { id: 4, name: 'Service D', description: 'Description of Service D', status: 'Active' },
-            { id: 5, name: 'Service E', description: 'Description of Service E', status: 'Active' },
-            { id: 6, name: 'Service F', description: 'Description of Service F', status: 'Inactive' },
-            { id: 7, name: 'Service G', description: 'Description of Service G', status: 'Active' }
-            ],
-            // takes input and appends new service to the array of services
-            newService: { name: '', description: '', status: '' }
-    }
-  },
+    setup() {
+        return { v$: useVuelidate({ $autoDirty: true }) }
+    },
+    data() {
+        return {
+            org: '',
+            service: {
+                servname: '',
+                description: '',
+                status: '',
+            }
+        }
+    },
+    created() {
+        axios.get(`${apiURL}/org`).then((res) => {
+        this.org = res.data._id
+        })
+    },
+    mounted() {
+        window.scrollTo(0, 0)
+    },
     methods: {
-      addService: function() {
-        // Generate a new ID for the service
-        var id = this.services.length + 1;
-        
-        // Add the new service to the list
-        this.services.push({
-          id: id,
-          name: this.newService.name,
-          description: this.newService.description,
-          status: this.newService.status
-        });
-        
-        // Clear the form inputs
-        this.newService.name = '';
-        this.newService.description = '';
-        this.newService.status = '';
-      }
+        async registerService() {
+        // Checks to see if there are any errors in validation
+        const isFormCorrect = await this.v$.$validate()
+        // If no errors found. isFormCorrect = True then the form is submitted
+        if (isFormCorrect) {
+            axios
+            .post(`${apiURL}/services`, this.service)
+            .then(() => {
+                alert('Service has been added.')
+                this.$router.push({ name: 'eventServices' })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        }
+    },
+    // sets validations for the various data properties
+    validations() {
+        return {
+            service: {
+                servname: { required },
+                status: { required }
+            }
+        }
     }
 }
 </script>
@@ -47,7 +65,7 @@ export default {
         Event Service Form
         </h1>
         <div class="px-10 py-20">
-            <form @submit.prevent="addService">
+            <form @submit.prevent="registerService">
                 <div
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
                 >
@@ -55,14 +73,23 @@ export default {
                 <!-- form field: add service name -->
                 <div class="flex flex-col">
                     <label class="block">
-                    <span class="text-gray-700">Service Name</span>
-                    <span style="color: #ff0000">*</span>
-                    <!-- service name is required to add as a new service -->
-                    <input 
-                        type="text"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="newService.name" required
-                    >
+                        <span class="text-gray-700">Service Name</span>
+                        <span style="color: #ff0000">*</span>
+                        <!-- service name is required to add as a new service -->
+                        <input 
+                            type="text"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            v-model="service.servname"
+                        />
+                        <span class="text-black" v-if="v$.service.servname.$error">
+                            <p
+                            class="text-red-700"
+                            v-for="error of v$.service.servname.$errors"
+                            :key="error.$uid"
+                            >
+                            {{ error.$message }}!
+                            </p>
+                        </span>
                     </label>
                 </div>
                 <!-- form field: add service description -->
@@ -73,7 +100,7 @@ export default {
                     <input 
                         type="text"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="newService.description"
+                        v-model="service.description"
                     >
                     </label>
                 </div>
@@ -83,12 +110,30 @@ export default {
                     <span style="color: #ff0000">*</span>
                     <div class="mt-1">
                         <label class="inline-flex items-center">
-                            <input type="radio" class="form-radio" name="status" value="Active" v-model="newService.status" required>
+                            <input type="radio" class="form-radio" name="status" value="Active" v-model="service.status" />
                             <span class="ml-2">Active</span>
+                            <span class="text-black" v-if="v$.service.status.$error">
+                                <p
+                                class="text-red-700"
+                                v-for="error of v$.service.status.$errors"
+                                :key="error.$uid"
+                                >
+                                {{ error.$message }}!
+                                </p>
+                            </span>
                         </label>
                         <label class="inline-flex items-center ml-6">
-                            <input type="radio" class="form-radio" name="status" value="Inactive" v-model="newService.status" required>
+                            <input type="radio" class="form-radio" name="status" value="Inactive" v-model="service.status" />
                             <span class="ml-2">Inactive</span>
+                            <span class="text-black" v-if="v$.service.status.$error">
+                                <p
+                                class="text-red-700"
+                                v-for="error of v$.service.status.$errors"
+                                :key="error.$uid"
+                                >
+                                {{ error.$message }}!
+                                </p>
+                            </span>
                         </label>
                     </div>
                 </div>
@@ -101,37 +146,6 @@ export default {
                     </button>
                 </div>
             </form>
-        </div>
-        <!-- displays list of all services -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-            <div class="ml-10">
-            <h2 class="text-2xl font-bold">List of Services</h2>
-            </div>
-            <div class="flex flex-col col-span-2">
-                <table class="min-w-full shadow-md rounded">
-                    <thead class="bg-gray-50 text-xl">
-                    <tr>
-                        <th class="p-4 text-left">Service Name</th>
-                        <th class="p-4 text-left">Service Description</th>
-                        <th class="p-4 text-left">Service Status</th>
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-300">
-                    <tr v-for="service in services" :key="service._id">
-                        <td class="p-2 text-left">
-                        {{ service.name }}
-                        </td>
-                        <td class="p-2 text-left">
-                        {{ service.description }}
-                        </td>
-                        <td class="p-2 text-left">{{ service.status }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br>
-                <br>
-                <br>
-            </div>
         </div>
     </main>
 </template>

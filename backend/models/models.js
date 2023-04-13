@@ -130,10 +130,37 @@ const eventDataSchema = new Schema(
   }
 )
 
+// collection for services
+const serviceDataSchema = new Schema(
+  {
+    _id: { type: String, default: uuid.v1 },
+    servname: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String
+    },
+    status: {
+      type: String,
+      required: true
+    },
+    orgs: {
+      type: [{ type: String, ref: 'org' }],
+      required: true,
+      validate: [(org) => org.length > 0, 'needs at least one org']
+    }
+  },
+  {
+    collection: 'service'
+  }
+)
+
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
+const services = mongoose.model('service', serviceDataSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events }
+module.exports = { clients, orgs, events, services }
