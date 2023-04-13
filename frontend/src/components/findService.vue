@@ -42,6 +42,9 @@ export default {
       this.status = ''
 
       this.getServices()
+    },
+    editService(serviceID) {
+      this.$router.push({ name: 'updateService', params: { id: serviceID } })
     }
   }
 };
@@ -150,7 +153,9 @@ export default {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
-            <tr v-for="service in queryData" :key="service._id">
+            <tr 
+            @click="editService(service._id)"
+            v-for="service in queryData" :key="service._id">
               <td class="p-2 text-left">{{ service.servname }}</td>
               <td class="p-2 text-left">{{ service.description }}</td>
               <td class="p-2 text-left">{{ service.status }}</td>

@@ -98,22 +98,6 @@ router.put('/register/:id', (req, res, next) => {
     )
 })
 
-// PUT remove existing service from org
-router.put('/deregister/:id', (req, res, next) => {
-    services.findByIdAndUpdate(
-      req.params.id,
-      { $pull: { orgs: org } },
-      (error, data) => {
-        if (error) {
-          console.log(error)
-          return next(error)
-        } else {
-          res.send('Service deregistered with org')
-        }
-      }
-    )
-})
-
 // hard DELETE service by ID, as per project specifications
 router.delete('/:id', (req, res, next) => {
     services.findByIdAndDelete(req.params.id, (error, data) => {

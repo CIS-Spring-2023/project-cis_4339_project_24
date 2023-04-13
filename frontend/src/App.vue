@@ -132,20 +132,6 @@ export default {
             </li>
             <!-- End: Find service page -->
 
-            <!-- Start: Event services page -->
-            <li>
-              <!-- gives access to both users to view this page -->
-              <router-link v-if="user.isLoggedIn || user.isLoggedIn2" to="/eventServices" class="nav-link">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >list</span
-                >
-                Event Services
-              </router-link>
-            </li>
-            <!-- End: Event services page -->
-
             <!-- Start: Client intake form page -->
             <li>
               <!-- gives access only to editor to use this page -->
@@ -188,19 +174,6 @@ export default {
             </li>
             <!-- End: Create service form page -->
 
-            <!-- Start: Edit services form page -->
-            <li>
-              <!-- gives access only to editor to use this page -->
-              <router-link v-if="user.isLoggedIn" to="/editServices" class="nav-link">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >edit</span
-                >
-                Edit Services
-              </router-link>
-            </li>
-            <!-- End: Edit services form page -->
           </ul>
         </nav>
       </header>
