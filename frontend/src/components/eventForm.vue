@@ -29,18 +29,21 @@ export default {
       services: []
     }
   },
-  async mounted() {
+/*   async mounted() {
     try {
-      const response = await axios.get(`${apiURL}/services?status=Active`)
+      const response = await axios.get(`${apiURL}/services/active`)
       this.services = response.data
     } catch (error) {
       console.log(error)
     }
-  },
-  computed: {
-    activeServices() {
-      return this.services.filter(service => service.status === 'Active')
-    }
+  }, */
+  mounted () {
+    axios.get(`${apiURL}/services/active`).then( response =>{
+        this.services = response.data;
+        console.log(this.services)
+      }).catch(error=> {
+        console.log(error);
+      });
   },
   methods: {
     async handleSubmitForm() {
@@ -154,7 +157,7 @@ export default {
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
             <!-- list of active services as checkboxes-->
-            <div v-for="service in activeServices" :key="service._id">
+            <div v-for="service in services" :key="service._id">
               <input
                   type="checkbox"
                   :id="service._id"

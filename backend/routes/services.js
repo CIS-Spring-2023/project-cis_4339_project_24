@@ -7,7 +7,7 @@ const org = process.env.ORG
 // importing data model schemas
 const { services } = require('../models/models')
 
-// GET 25 most recent services for org
+// GET 10 most recent services for org
 router.get('/', (req, res, next) => {
     services
       .find({ orgs: org }, (error, data) => {
@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
         }
       })
       .sort({ updatedAt: -1 })
-      .limit(25)
+      .limit(10)
 })
 
 // GET single service by ID
@@ -56,6 +56,19 @@ router.get('/search', (req, res, next) => {
         res.json(data)
       }
     })
+})
+
+// GET all services
+router.get('/active', (req, res, next) => {
+  services
+  .find({ $and: [{org: org }, {status: 'Active'}] } , (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        return res.json(data)
+      }
+    })
+    .sort({ updatedAt: -1 })
 })
 
 // POST new service
