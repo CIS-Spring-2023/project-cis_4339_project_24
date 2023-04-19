@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       recentEvents: [],
+      recentZips: [],
       labels: [],
       chartData: [],
       labels2: [],
@@ -64,12 +65,25 @@ export default {
       }
       this.loading = false
     },
+    formattedDate(datetimeDB) {
+      const dt = DateTime.fromISO(datetimeDB, {
+        zone: 'utc'
+      })
+      return dt
+        .setZone(DateTime.now().zoneName, { keepLocalTime: true })
+        .toLocaleString()
+    },
+    // method to allow click through table to event details
+    editEvent(eventID) {
+      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+    },    
     async getZipData() {
       try {
         this.error2 = null
         this.loading2 = true
         const response = await axios.get(`${apiURL}/clients/zip`)
         const data = response.data
+        this.recentZips = response.data
         console.log(response.data)
         this.labels2 = data.map((item) => item._id)
         this.chartData2 = data.map((item) => item.count)
@@ -95,18 +109,6 @@ export default {
         }
       }
       this.loading2 = false
-    },
-    formattedDate(datetimeDB) {
-      const dt = DateTime.fromISO(datetimeDB, {
-        zone: 'utc'
-      })
-      return dt
-        .setZone(DateTime.now().zoneName, { keepLocalTime: true })
-        .toLocaleString()
-    },
-    // method to allow click through table to event details
-    editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
     }
   }
 }
@@ -115,17 +117,17 @@ export default {
 <template>
   <main>
     <div>
-      <h1
-        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
-      >
+      <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
         Welcome
       </h1>
       <br />
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
         <div class="ml-10"></div>
         <div class="flex flex-col col-span-2">
+          <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
+              Events Attendance
+          </h1>
+          <br>
           <table class="min-w-full shadow-md rounded">
             <thead class="bg-gray-50 text-xl">
               <tr class="p-4 text-left">
@@ -146,17 +148,14 @@ export default {
               </tr>
             </tbody>
           </table>
+          <br>
           <div>
-            <br>
-            <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Events Attendance</h2>
-            <br>
             <AttendanceChart
               v-if="!loading && !error"
               :label="labels"
               :chart-data="chartData"
             ></AttendanceChart>
             <br>
-            
 
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
@@ -179,15 +178,41 @@ export default {
             </div>
             <!-- End of error alert -->
           </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+        <div class="ml-10"></div>
+        <div class="flex flex-col col-span-2">
+          <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
+              Clients by Zip Code
+          </h1>
+          <br>
+          <table class="min-w-full shadow-md rounded">
+            <thead class="bg-gray-50 text-xl">
+              <tr class="p-4 text-left">
+                <th class="p-4 text-left">Zip Number</th>
+                <th class="p-4 text-left">Client Count</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-300">
+              <tr
+                v-for="zip in recentZips"
+                :key="zip._id"
+              >
+                <td class="p-2 text-left">{{ zip._id }}</td>
+                <td class="p-2 text-left">{{ zip.count }}</td>
+              </tr>
+            </tbody>
+          </table>
           <div>
             <br>
-            <h2 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Clients by Zip Code</h2>
-            <br>
             <DonutZip
-              v-if="!loading && !error"
+              v-if="!loading2 && !error2"
               :label="labels2"
               :chart-data="chartData2"
             ></DonutZip>
+            <br>
+
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading2">
               <p
@@ -207,8 +232,9 @@ export default {
                 {{ error2.message }}
               </p>
             </div>
+            <!-- End of error alert -->
           </div>
-      </div>
+        </div>
       </div>
     </div>
   </main>

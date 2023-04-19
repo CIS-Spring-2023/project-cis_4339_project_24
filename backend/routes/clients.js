@@ -81,13 +81,12 @@ router.get('/lookup/:phoneNumber', (req, res, next) => {
   )
 })
 
-// GET zip codes of clients
+// GET clients by zip code
 router.get('/zip', (req, res, next) => {
-  clients
-  .aggregate([
-    {
-      $group: {_id: "$address.zip", count: {$sum: 1}}
-    }
+  clients.aggregate([
+    { $match: { orgs: org }},
+    { $unwind: "$address" },
+    { $group: { _id: "$address.zip", count: { $sum: 1 } } }
   ], (error, data) => {
     if (error) {
       return next(error)
@@ -96,38 +95,6 @@ router.get('/zip', (req, res, next) => {
     }
   })
 })
-
-/*
-// GET zip codes of clients
-router.get('/zip', (req, res, next) => {
-  clients
-  .aggregate([
-    {
-      $unwind: "$address"
-    },
-    {
-      $group: {
-        _id: "$address.zip",
-        count: {$sum: 1},
-        clients: {
-          $push: {
-            firstname: "$firstname",
-            lastname: "$lastname",
-            email: "$email",
-            address: "$address"
-          }
-        }
-      }
-    }
-  ], (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      return res.json(data)
-    }
-  })
-})
-*/
 
 // POST new client
 router.post('/', (req, res, next) => {

@@ -5,7 +5,7 @@ Chart.register(...registerables)
 
 export default {
   props: {
-    labels: {
+    label: {
       type: Array
     },
     chartData: {
@@ -20,13 +20,13 @@ export default {
     await new Chart(this.$refs.DonutZip, {
       type: 'doughnut',
       data: {
-        labels: this.labels,
+        labels: this.label,
         datasets: [
           {
             borderWidth: 1,
             backgroundColor: backgroundColor,
             borderColor: borderColor,
-            data: Object.values(this.chartData)
+            data: this.chartData // Update this line
           }
         ]
       },

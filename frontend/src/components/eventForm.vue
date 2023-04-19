@@ -29,14 +29,6 @@ export default {
       services: []
     }
   },
-/*   async mounted() {
-    try {
-      const response = await axios.get(`${apiURL}/services/active`)
-      this.services = response.data
-    } catch (error) {
-      console.log(error)
-    }
-  }, */
   mounted () {
     axios.get(`${apiURL}/services/active`).then( response =>{
         this.services = response.data;
