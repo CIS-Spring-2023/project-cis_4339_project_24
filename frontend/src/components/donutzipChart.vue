@@ -26,14 +26,14 @@ export default {
             borderWidth: 1,
             backgroundColor: backgroundColor,
             borderColor: borderColor,
-            data: this.chartData // Update this line
+            data: this.chartData
           }
         ]
       },
       options: {
         plugins: {
           legend: {
-            display: false
+            display: true // displays legend
           }
         },
         responsive: true,

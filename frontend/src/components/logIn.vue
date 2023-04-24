@@ -12,12 +12,12 @@
 
                           <form @submit.prevent="store.login(username, password)" novalidate="true">
                               <div class="form-outline form-white mb-4">
-                                  <input type="email" id="typeEmailX" class="form-control form-control-lg" v-model="username"/>
+                                  <input type="email" id="typeEmailX" class="form-control form-control-lg" v-model="username" required/>
                                   <label class="form-label" for="typeEmailX">Username</label>
                               </div>
 
                               <div class="form-outline form-white mb-4">
-                                  <input type="password" id="typePasswordX" class="form-control form-control-lg" v-model="password"/>
+                                  <input type="password" id="typePasswordX" class="form-control form-control-lg" v-model="password" required/>
                                   <label class="form-label" for="typePasswordX">Password</label>
                               </div>
 
