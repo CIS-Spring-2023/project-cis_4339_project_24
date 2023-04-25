@@ -2,6 +2,7 @@
 <script>
 import { DateTime } from 'luxon'
 import axios from 'axios'
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -16,6 +17,11 @@ export default {
   },
   mounted() {
     this.getEvents()
+  },
+  setup() {
+    // function that checks if a user is logged in
+    const user = useLoggedInUserStore();
+    return { user };
   },
   methods: {
     // better formattedDate
@@ -54,7 +60,14 @@ export default {
       this.getEvents()
     },
     editEvent(eventID) {
-      this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      // Restrict editing unless user is logged in
+      if (this.user.isLoggedIn) {
+        this.$router.push({ name: 'eventdetails', params: { id: eventID } })
+      } else {
+        // Show error message or redirect to login page
+        // depending on your application's logic
+        alert('You are not authorized to make changes on these records.');
+      }
     }
   }
 };

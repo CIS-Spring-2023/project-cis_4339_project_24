@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
-//const bcrypt = require('bcrypt');
 
 // Defining a store
 export const useLoggedInUserStore = defineStore({
@@ -19,10 +18,6 @@ export const useLoggedInUserStore = defineStore({
   actions: {
     async login(username, password) {
       try {
-        // Hash the password before sending it to the server
-        // const salt = await bcrypt.genSalt(10);
-        // const hashedPassword = await bcrypt.hash(password, salt);
-
         console.log(username, password)
         const response = await axios.post(`${apiURL}/users/login`, {username, password});
         console.log(response)
