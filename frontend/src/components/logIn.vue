@@ -10,7 +10,7 @@
                           <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                           <p class="text-white-50 mb-5">Please enter your credentials!</p>
 
-                          <form @submit.prevent="store.login(username, password)" novalidate="true">
+                          <form @submit.prevent="login" novalidate="true">
                               <div class="form-outline form-white mb-4">
                                   <input type="email" id="typeEmailX" class="form-control form-control-lg" v-model="username" required/>
                                   <label class="form-label" for="typeEmailX">Username</label>
@@ -33,21 +33,32 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import { useLoggedInUserStore } from "@/store/loggedInUser";
+import { useLoggedInUserStore } from '../store/loggedInUser.js'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 export default {
-  data: () => {
-    return {
-      username: "",
-      password: "",
-    };
-  },
+  name: 'LogIn',
   setup() {
     const store = useLoggedInUserStore()
+    const router = useRouter()
+
+    const username = ref('')
+    const password = ref('')
+
+    const login = async () => {
+      await store.login(username.value, password.value)
+      if (store.isLoggedIn || store.isLoggedIn2) {
+        router.push('/')
+      }
+    }
+
     return {
-      // you can return the whole store instance to use it in the template
       store,
+      username,
+      password,
+      login
     }
   }
-};
+}
 </script>

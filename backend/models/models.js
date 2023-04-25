@@ -167,7 +167,8 @@ const userDataSchema = new Schema(
     },
     username: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     password: {
       type: String,
@@ -180,7 +181,7 @@ const userDataSchema = new Schema(
     org: {
       type: String,
       required: true
-    },
+    }
   },
   {
     collection: 'user'
@@ -188,7 +189,7 @@ const userDataSchema = new Schema(
 )
 
 // determines the strength of the hash
-const SALT_ROUNDS = 10;
+/* const SALT_ROUNDS = 10;
 
 //  pre-save hook to the user model that hashes the password before it's saved to the database
 userDataSchema.pre('save', async function(next) {
@@ -204,7 +205,7 @@ userDataSchema.pre('save', async function(next) {
   } catch (error) {
     next(error);
   }
-});
+}); */
 
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)
