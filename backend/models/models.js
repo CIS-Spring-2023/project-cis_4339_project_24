@@ -2,16 +2,17 @@
 const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt'); // used to create user with hashed password into mongodb user collection from backend
 
 // collection for org
 const orgDataSchema = new Schema(
   {
-    _id: {
+    _id: { type: String, default: uuid.v1 },
+    orgid: {
       type: String,
       required: true
     },
-    name: {
+    orgname: {
       type: String,
       required: true
     }
@@ -188,10 +189,15 @@ const userDataSchema = new Schema(
   }
 )
 
-// determines the strength of the hash
+/* commented out code blocks below were used to create a user using this backend by specifiying all
+document fields from the user collection schema and have the plain text password hashed 
+before saving the user document to the mongodb cloud instead of creating the user directly into the 
+mongodb cloud and have the plaintext password hashed externally/ on its own */
+
+// determines the number of times the password is salted and hashed
 /* const SALT_ROUNDS = 10;
 
-//  pre-save hook to the user model that hashes the password before it's saved to the database
+//  pre-save hook to user model that hashes the password before it's saved to the database
 userDataSchema.pre('save', async function(next) {
   // "pre" middleware intercepts the save event and checks if password field has been modified
   if (!this.isModified('password')) return next();

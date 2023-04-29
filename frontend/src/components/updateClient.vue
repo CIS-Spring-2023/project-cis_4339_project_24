@@ -49,6 +49,7 @@ export default {
     })
     this.getEventsRegistered()
   },
+  // reset scroll position to very top of page
   mounted() {
     window.scrollTo(0, 0)
   },

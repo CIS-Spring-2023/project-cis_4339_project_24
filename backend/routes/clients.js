@@ -81,16 +81,25 @@ router.get('/lookup/:phoneNumber', (req, res, next) => {
   )
 })
 
-// GET clients by zip code
+// GET clients by zip code for donut chart
 router.get('/zip', (req, res, next) => {
+  // aggregation performs a group by operation on client collection to count clients based on their zip codes
   clients.aggregate([
+    // filters documents in the client collection by orgs field that matches the value of current org variable
     { $match: { orgs: org }},
+    // deconstructs address array field into separate documents and creats one document for each element in address array
+    // also allows to 
     { $unwind: "$address" },
+    // groups documents by zip field in the address subdocument and count of clients in each group using the $sum operator
+    // this also does not group documents with empty zip code field
+    // as a result only zip codes that have at least one client associated with them are appended to the array
     { $group: { _id: "$address.zip", count: { $sum: 1 } } }
+    // as a result an array of objects containing fields _id, zip, and client count by respective zip code is returned
   ], (error, data) => {
     if (error) {
       return next(error)
     } else {
+      // result data is sent as JSON response to the client
       return res.json(data)
     }
   })

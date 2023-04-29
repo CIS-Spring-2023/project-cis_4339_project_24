@@ -19,11 +19,13 @@ export default {
             }
         }
     },
+    // retreiving services for current org instance
     created() {
         axios.get(`${apiURL}/org`).then((res) => {
         this.org = res.data._id
         })
     },
+    // reset scroll position to very top of page
     mounted() {
         window.scrollTo(0, 0)
     },

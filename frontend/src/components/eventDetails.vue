@@ -28,8 +28,7 @@ export default {
         description: '',
         attendees: []
       },
-      services: [],
-      selectedServices: []
+      services: []
     }
   },
   created() {
@@ -42,10 +41,14 @@ export default {
         })
       })
     })
-    axios.get(`${apiURL}/services`).then((res) => {
-      this.services = res.data.filter(s => s.status === 'Active')
-      this.selectedServices = this.services.filter(s => this.event.services.includes(s._id))
-    })
+  },
+  mounted () {
+    axios.get(`${apiURL}/services/active`).then( response =>{
+        this.services = response.data;
+        console.log(this.services)
+      }).catch(error=> {
+        console.log(error);
+      });
   },
   methods: {
     // better formatted date, converts UTC to local time

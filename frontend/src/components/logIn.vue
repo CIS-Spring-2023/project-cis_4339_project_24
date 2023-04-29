@@ -1,4 +1,40 @@
 <!-- eslint-disable prettier/prettier -->
+<script>
+import { useLoggedInUserStore } from '../store/loggedInUser.js'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+export default {
+  name: 'LogIn',
+  setup() {
+    // manages state of currently logged in user
+    const store = useLoggedInUserStore()
+    const router = useRouter()
+
+/*  reactive components to re-render automatically whenever the value of the username and password input fields change
+    since input fields for these data properties will initially be empty when the component is rendered */
+    const username = ref('')
+    const password = ref('')
+
+    // sends API request to log the user in with inputted username and password values
+    const login = async () => {
+      await store.login(username.value, password.value)
+      // updates isLoggedIn and isLoggedIn2 properties of the store if user has respective editor/viewer role
+      if (store.isLoggedIn || store.isLoggedIn2) {
+        router.push('/')
+      }
+    }
+
+    return {
+      store,
+      username,
+      password,
+      login
+    }
+  }
+}
+</script>
+<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
       <div class="container py-5 h-100">
@@ -31,34 +67,3 @@
       </div>
   </main>
 </template>
-<!-- eslint-disable prettier/prettier -->
-<script>
-import { useLoggedInUserStore } from '../store/loggedInUser.js'
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-
-export default {
-  name: 'LogIn',
-  setup() {
-    const store = useLoggedInUserStore()
-    const router = useRouter()
-
-    const username = ref('')
-    const password = ref('')
-
-    const login = async () => {
-      await store.login(username.value, password.value)
-      if (store.isLoggedIn || store.isLoggedIn2) {
-        router.push('/')
-      }
-    }
-
-    return {
-      store,
-      username,
-      password,
-      login
-    }
-  }
-}
-</script>

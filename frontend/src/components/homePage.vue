@@ -76,15 +76,18 @@ export default {
     // method to allow click through table to event details
     editEvent(eventID) {
       this.$router.push({ name: 'eventdetails', params: { id: eventID } })
-    },    
+    },
+    // function to retreive client zip data for donut chart 
     async getZipData() {
       try {
+        // initialized to catch errors
         this.error2 = null
         this.loading2 = true
         const response = await axios.get(`${apiURL}/clients/zip`)
         const data = response.data
         this.recentZips = response.data
         console.log(response.data)
+        // labels2 and chartData2 variables are populated with mapped data extracted from mongodbb client collection
         this.labels2 = data.map((item) => item._id)
         this.chartData2 = data.map((item) => item.count)
       } catch (err) {

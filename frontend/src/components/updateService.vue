@@ -24,7 +24,8 @@ export default {
       // simplified setting service
       this.service = res.data
     })
-  },  
+  },
+  // reset scroll position to very top of page  
   mounted() {
     window.scrollTo(0, 0)
   },
@@ -32,7 +33,7 @@ export default {
     async updateService() {
       // Checks to see if there are any errors in validation
       const isFormCorrect = await this.v$.$validate()
-      // If no errors found. isFormCorrect = True then the form is submitted
+      // if no errors found then the form is submitted
       if (isFormCorrect) {
         axios
           .put(`${apiURL}/services/update/${this.id}`, this.service)
@@ -44,7 +45,7 @@ export default {
     },
     // hard delete method
     deleteService() {
-      // Show confirmation dialog
+      // shows confirmation alert
       if (confirm("Are you sure you want to permanently delete this service?")) {
         axios.delete(`${apiURL}/services/${this.id}`).then(() => {
           alert('Service has been deleted.')

@@ -17,7 +17,9 @@ router.get('/', (req, res, next) => {
           return res.json(data)
         }
       })
+      // the most recently updated documents will appear first in the mongodb results
       .sort({ updatedAt: -1 })
+      // limits the display to 10 documents
       .limit(10)
 })
 
@@ -40,10 +42,11 @@ router.get('/search', (req, res, next) => {
     const dbQuery = { orgs: org }
     switch (req.query.searchBy) {
       case 'name':
-        // match event name, no anchor
+        // match service name on search, no anchor
         dbQuery.servname = { $regex: `${req.query.servname}`, $options: 'i' }
         break
       case 'sstatus':
+        // match service status on search, no anchor
         dbQuery.status = { $regex: `^${req.query.status}`, $options: 'i' }
         break
       default:
@@ -58,7 +61,8 @@ router.get('/search', (req, res, next) => {
     })
 })
 
-// GET all services
+// GET all active services
+// matches services with 'Active' in status field for current org
 router.get('/active', (req, res, next) => {
   services
   .find({ $and: [{org: org }, {status: 'Active'}] } , (error, data) => {
@@ -68,7 +72,6 @@ router.get('/active', (req, res, next) => {
         return res.json(data)
       }
     })
-    .sort({ updatedAt: -1 })
 })
 
 // POST new service
@@ -111,7 +114,7 @@ router.put('/register/:id', (req, res, next) => {
     )
 })
 
-// hard DELETE service by ID, as per project specifications
+// hard DELETE service by ID
 router.delete('/:id', (req, res, next) => {
     services.findByIdAndDelete(req.params.id, (error, data) => {
       if (error) {

@@ -8,35 +8,37 @@ export default {
   name: 'App',
   data() {
     return {
-      orgName: 'Group 24'
+      orgName: ''
     }
-  },
-  created() {
-    axios.get(`${apiURL}/org`).then((res) => {
-      this.orgName = res.data.name
-    })
   },
   setup() {
     // function that checks if a user is logged in
     const user = useLoggedInUserStore();
     return { user };
+  },
+  created() {
+    // function used to render organization instance name stored in mongodb org collection
+    axios.get(`${apiURL}/org`).then((res) => {
+      this.orgName = res.data.orgname
+    })
   }
 }
 </script>
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <main class="flex flex-row">
-    <div id="_container" class="h-screen">
+  <!-- added in-line css to allow left menu bar to displayed to the bottom of the page regardless of the content height -->
+  <main class="flex flex-row" style="display: flex; flex-direction: row; min-height: 100vh;">
+    <div id="_container" class="flex-row" style="display: flex; flex-direction: column; flex: 1;">
       <header class="w-full">
         <section class="text-center">
           <img class="m-auto" src="@\assets\DanPersona.svg" />
         </section>
-        <nav class="mt-10">
+        <nav class="mt-10" style="flex-shrink: 0;">
           <ul class="flex flex-col gap-4">
             <!-- Start: Login page -->
             <!-- any user can see login tab upon openning the web app -->
 
-              <!-- hides login menu tab after either user logs in -->
+              <!-- hides login menu tab after user logs in -->
               <!-- login tab appears again after users logout -->
             <li v-if="!user.isLoggedIn && !user.isLoggedIn2">
               <router-link to="/logIn" class="nav-link">
@@ -58,6 +60,7 @@ export default {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
+              <!-- welcome message with currently logged in users name from store -->
               <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -178,17 +181,20 @@ export default {
         </nav>
       </header>
     </div>
+    <!-- Start: Render top row bar -->
     <div class="grow w-4/5">
       <section
         class="justify-end items-center h-24 flex"
         style="background: linear-gradient(250deg, #c8102e 70%, #efecec 50.6%)"
       >
-        <h1 class="mr-20 text-3xl text-white">{{ this.orgName }}</h1>
+        <!-- Render organization instance name -->
+        <h1 class="mr-20 text-3xl text-white">{{ orgName }}</h1>
       </section>
       <div>
         <router-view></router-view>
       </div>
     </div>
+    <!-- End: Render top row bar -->
   </main>
 </template>
 <!-- eslint-disable prettier/prettier -->

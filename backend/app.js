@@ -38,6 +38,7 @@ app.use(morgan('dev'))
 app.use('/clients', require('./routes/clients'))
 app.use('/events', require('./routes/events'))
 app.use('/org', require('./routes/org'))
+// setup middle ware for routes for sprint 3
 app.use('/services', require('./routes/services'))
 app.use('/users', require('./routes/users'))
 

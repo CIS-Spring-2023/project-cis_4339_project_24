@@ -40,6 +40,7 @@ export default {
       axios.get(`${apiURL}/clients`).then((res) => {
         this.queryData = res.data
       })
+      // reset scroll position to very top of page
       window.scrollTo(0, 0)
     },
     clearSearch() {

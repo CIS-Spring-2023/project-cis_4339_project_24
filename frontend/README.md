@@ -1,36 +1,41 @@
-# Sprint 2
+# Group 24 - Sprint 3 Frontend Documentation
 
-To demonstrate user roles and their nagivaition or modification privileges in the application
-for Sprint 2, we have hardcoded user credentials corresponding to their respective role. For example,
-when logging in with editor credentials, all applications pages will be rendered including their respective
-functionalities. On the other hand, when logging in with viewer credentials, only dashboard, find client,
-find event, and event services will be rendered to view and access.
+To demonstrate user roles and their nagivaition and privileges in the application we have setup the following 
+user credentials in the cloud. When logging in with editor credentials, all applications pages will be rendered
+including their respective functionalities. While logging in with viewer credentials, only dashboard, find client,
+find event, and event services will be rendered. Viewer role will also be restricted from accessing the update  
+functionalies on these pages as well.
 
 Log in Credentials:
 - Editor role:
-    - username: editor
-    - password: editor
+    - username: user1
+    - password: password1
 
 - Viewer role:
-    - username: viewer
-    - password: viewer
+    - username: user2
+    - password: password2
 
 
-# Note
+## Note
 
-Soft deletion (active/inactive) of services can be performed through the edit button in the 
-edit services menu tab. When a user clicks on the edit button on a row of services, it will
-redirect the user on a different page to make changes to the service name, description (optional),
-and status (active/inactive). The delete button in the actions column is to permanently delete a service.
+Soft deletion (active/inactive) of services can be performed through the find services pages while logged in
+as a user with an editor role. A user can click on the respective service record row they wish to edit and the application
+will redirect the user on a different page to make changes to the service name, description (optional), and status.
+The delete button in the update page is to permanently delete a service, and will ask the user again if they want to
+permanently delete the service before performing the delete action. A cancel button is also provided in the update page 
+if the user wishes to cancel the update action. These functionalities are also provided for the find client and 
+find event pages for users with editor privilages.
 
 
-# References
+## References
 
 - [Creation and Display of Doughnut Chart](https://www.chartjs.org/docs/latest/samples/other-charts/doughnut.html)
 
 - [Bootstrap 5: to use with online template below](https://getbootstrap.com/)
 
 - [Log in Bootstrap Template: Login Modal](https://mdbootstrap.com/docs/standard/extended/login/)
+
+- [MongoDB Atlas Charts Feature](https://charts.mongodb.com)
 
 - [Querys asked with Chat GPT for Sprint 2:](https://openai.com/blog/chatgpt)
     - "Performing CRUD Operations on a hardcoded list of Data"
@@ -42,7 +47,7 @@ and status (active/inactive). The delete button in the actions column is to perm
     - Module 5 - vue-student-management-app: Edit and Delete Features in a List
 
 
-# Additional Packages Installed
+## Additional Packages Installed for Sprint 2
 
 We have instlled the following additional packages in the development of Sprint 2 to function with 
 the front end portion of this project.
@@ -51,13 +56,13 @@ the front end portion of this project.
     
     npm install bootstrap
 
-
-# Data Platform Frontend
+# Original Frontend Project Documentation
+### Data Platform Frontend
 
 This project uses [VueJS 3](https://vuejs.org/) with [Vite](https://vitejs.dev/) and [TailwindCSS](https://tailwindcss.com/).
 For form validation [Vuelidate](https://vuelidate-next.netlify.app/) is used.
 
-## Project setup
+### Project setup
 
     npm install
 
