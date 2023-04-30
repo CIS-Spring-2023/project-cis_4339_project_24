@@ -1,5 +1,6 @@
 # Group 24 - Sprint 3 Backend Documentation
 
+- [API Documentation with Postman](https://documenter.getpostman.com/view/23112815/2s93eSZb6X)
 
 ## References
 

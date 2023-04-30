@@ -4,12 +4,18 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 import { DateTime } from 'luxon'
+import { useLoggedInUserStore } from '../store/loggedInUser.js'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   props: ['id'],
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    const user = useLoggedInUserStore();
+
+    return {
+      v$: useVuelidate({ $autoDirty: true }),
+      user
+    }
   },
   data() {
     return {
@@ -49,6 +55,11 @@ export default {
       }).catch(error=> {
         console.log(error);
       });
+  },
+  computed: {
+    isReadOnly() {
+      return this.user.isLoggedIn2
+    }
   },
   methods: {
     // better formatted date, converts UTC to local time
@@ -109,6 +120,7 @@ export default {
               <span class="text-gray-700">Event Name</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="event.name"
@@ -131,6 +143,7 @@ export default {
               <span class="text-gray-700">Date</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly"
                 type="date"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="event.date"
@@ -155,6 +168,7 @@ export default {
               <span class="text-gray-700">Description</span>
               <!-- added missing v-model connection -->
               <textarea
+                :disabled="isReadOnly"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 rows="2"
                 v-model="event.description"
@@ -171,6 +185,7 @@ export default {
             <!-- list of active services as checkboxes-->
             <div v-for="service in services" :key="service._id">
               <input
+                  :disabled="isReadOnly"
                   type="checkbox"
                   :id="service._id"
                   :value="service._id"
@@ -191,6 +206,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Address Line 1</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -203,6 +219,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Address Line 2</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -215,6 +232,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">City</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -228,6 +246,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">County</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -240,6 +259,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Zip Code</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -255,6 +275,7 @@ export default {
         >
           <div class="flex justify-between mt-10 mr-20">
             <button
+              v-if="!isReadOnly"
               @click="handleEventUpdate"
               type="submit"
               class="bg-green-700 text-white rounded"
@@ -264,6 +285,7 @@ export default {
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button
+              v-if="!isReadOnly"
               @click="eventDelete"
               type="submit"
               class="bg-red-700 text-white rounded"
@@ -303,6 +325,7 @@ export default {
               </thead>
               <tbody class="divide-y divide-gray-300">
                 <tr
+                  :disabled="isReadOnly"
                   @click="editClient(client._id)"
                   v-for="client in clientAttendees"
                   :key="client._id"

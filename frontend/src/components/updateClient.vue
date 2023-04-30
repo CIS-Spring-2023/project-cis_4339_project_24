@@ -5,13 +5,19 @@ import { required, email, alpha, numeric } from '@vuelidate/validators'
 import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
 import { DateTime } from 'luxon'
+import { useLoggedInUserStore } from '../store/loggedInUser.js'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   props: ['id'],
   components: { VueMultiselect },
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    const user = useLoggedInUserStore();
+
+    return {
+      v$: useVuelidate({ $autoDirty: true }),
+      user
+    }
   },
   data() {
     return {
@@ -48,6 +54,11 @@ export default {
       this.eventsAll = res.data
     })
     this.getEventsRegistered()
+  },
+  computed: {
+    isReadOnly() {
+      return this.user.isLoggedIn2
+    }
   },
   // reset scroll position to very top of page
   mounted() {
@@ -171,6 +182,7 @@ export default {
               <span class="text-gray-700">First Name</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -193,6 +205,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Middle Name</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -207,6 +220,7 @@ export default {
               <span class="text-gray-700">Last Name</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
@@ -229,6 +243,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Email</span>
               <input
+                :disabled="isReadOnly"
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -251,6 +266,7 @@ export default {
               <span class="text-gray-700">Phone Number</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
@@ -275,6 +291,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Alternative Phone Number</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
@@ -294,6 +311,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Address Line 1</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.line1"
@@ -305,6 +323,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Address Line 2</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.line2"
@@ -317,6 +336,7 @@ export default {
               <span class="text-gray-700">City</span>
               <span style="color: #ff0000">*</span>
               <input
+                :disabled="isReadOnly" 
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.city"
@@ -329,6 +349,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">County</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.county"
@@ -340,6 +361,7 @@ export default {
             <label class="block">
               <span class="text-gray-700">Zip Code</span>
               <input
+                :disabled="isReadOnly"
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.zip"
@@ -355,6 +377,7 @@ export default {
         >
           <div class="flex justify-between mt-10 mr-20">
             <button
+              v-if="!isReadOnly"
               @click="updateClient"
               type="submit"
               class="bg-green-700 text-white rounded"
@@ -364,6 +387,7 @@ export default {
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button
+              v-if="!isReadOnly"
               @click="deregisterClient"
               type="submit"
               class="bg-red-700 text-white rounded"
@@ -401,6 +425,7 @@ export default {
               <tbody class="divide-y divide-gray-300">
                 <!-- allow click through to event details -->
                 <tr
+                  :disabled="isReadOnly"
                   @click="editEvent(event._id)"
                   v-for="event in eventsRegistered"
                   :key="event._id"
@@ -417,6 +442,7 @@ export default {
           <div class="flex flex-col">
             <!-- fixed weird selection duplication bug -->
             <VueMultiselect
+              v-if="!isReadOnly"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               v-model="eventsSelected"
               :options="eventsAll"
@@ -429,6 +455,7 @@ export default {
             />
             <div class="flex justify-between">
               <button
+                v-if="!isReadOnly"
                 @click="addToEvent"
                 type="submit"
                 class="mt-5 bg-red-700 text-white rounded"
